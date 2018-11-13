@@ -104,8 +104,8 @@ class Bot extends BaseBot {
             // a2.setPlayerInfo(playerInfo);
     
             const response = {
-                directives: [a1]
-                // outputSpeech: '这是你要听的词语'
+                directives: [a1],
+                outputSpeech: '这是你要听的词语'
             }
             console.log(JSON.stringify(response))
             return response
