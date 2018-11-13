@@ -81,30 +81,8 @@ class Bot extends BaseBot {
             let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ENQUEUED)
             let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
 
-            // //音频播放器的主界
-            // let playerInfo = new PlayerInfo();
-            // //创建暂停按钮
-            // let playpause = new PlayPauseButton();
-            // let previous = new PreviousButton();
-            // let controls = [playpause, previous];
-
-            // //设置PlayerInfo的Controls内容
-            // playerInfo.setControls(controls);
-
-            // //也可以使用addControl,增加一个control
-            // playerInfo.addControl(new NextButton());
-
-            // playerInfo.setTitle('词语');
-            // playerInfo.setTitleSubtext1('窗前');
-
-            // //设置Play指令的PlayerInfo
-            // a1.setPlayerInfo(playerInfo);
-
-            // playerInfo.setTitleSubtext1('过度');
-            // a2.setPlayerInfo(playerInfo);
-    
             const response = {
-                directives: [a1],
+                directives: [new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.REPLACE_ALL)],
                 outputSpeech: '这是你要听的词语'
             }
             console.log(JSON.stringify(response))
