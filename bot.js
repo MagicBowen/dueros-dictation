@@ -82,7 +82,7 @@ class Bot extends BaseBot {
             let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
 
             const response = {
-                directives: [new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE), a1],
+                directives: [a2, a1],
                 outputSpeech: '这是你要听的词语'
             }
             console.log(JSON.stringify(response))
