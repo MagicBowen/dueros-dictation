@@ -78,7 +78,7 @@ class Bot extends BaseBot {
             const NextButton = BaseBot.Directive.AudioPlayer.Control.NextButton;
             const PreviousButton = BaseBot.Directive.AudioPlayer.Control.PreviousButton;
 
-            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ALL)
+            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.ENQUEUE)
             let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
 
             // //音频播放器的主界
@@ -104,7 +104,7 @@ class Bot extends BaseBot {
             // a2.setPlayerInfo(playerInfo);
     
             const response = {
-                directives: [a1],
+                directives: [this.getTextTemplate('word'), a1],
                 outputSpeech: '这是你要听的词语'
             }
             console.log(JSON.stringify(response))
