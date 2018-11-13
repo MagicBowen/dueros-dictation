@@ -73,8 +73,8 @@ class Bot extends BaseBot {
             //                 console.log('Error occurred: ' + error)
             //             })
             const Play = BaseBot.Directive.AudioPlayer.Play
-            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ALL)
-            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.REPLACE_ENQUEUED)
+            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.ENQUEUE)
+            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
     
             const response = {
                 directives: [a1, a2],
