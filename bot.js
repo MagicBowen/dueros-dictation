@@ -79,10 +79,10 @@ class Bot extends BaseBot {
             const PreviousButton = BaseBot.Directive.AudioPlayer.Control.PreviousButton;
 
             let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.ENQUEUE)
-            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
+            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.REPLACE_ENQUEUED)
 
             const response = {
-                directives: [a2, a1],
+                directives: [a1, a2],
                 outputSpeech: '这是你要听的词语'
             }
             console.log(JSON.stringify(response))
