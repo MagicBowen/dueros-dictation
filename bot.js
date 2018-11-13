@@ -78,7 +78,7 @@ class Bot extends BaseBot {
     
             const response = {
                 directives: [a1, a2],
-                outputSpeech: '欢迎使用测试技能'
+                outputSpeech: '这是你要听的词语'
             }
             console.log(JSON.stringify(response))
             return response
