@@ -140,6 +140,35 @@ class Bot extends BaseBot {
         return ((result.intent.indexOf('how-to-record') != -1)||(result.reply.indexOf('哒尔文') != -1))
     }
 
+    getDirectives(result) {
+        let directives = []
+        if (result.reply) {
+            directives.push(this.getTextTemplate(result.reply))
+        }
+        if (result.data) {
+            const Play = BaseBot.Directive.AudioPlayer.Play
+            let action = Play.REPLACE_ALL
+            for (let data of result.data) {
+                if (data.type && data.type === 'play-audio' && data['audio-url']) {
+                    let audioUrl = data['audio-url']
+                    if(data['audio-url'] === 'http://www.xiaodamp.cn/asst/voice/5s_white_noise.mp3')
+                    {
+                        audioUrl = 'http://xiaoda.ai/audios/audio?name=05'
+                    }
+                    directives.push(new Play(audioUrl, action))
+                    action = Play.REPLACE_ENQUEUED
+                } else if (data.type && data.type === 'text' && data['reply']) {
+                    if (result.reply) {
+                        result.reply += `。${data.reply}`
+                    } else {
+                        result.reply = data.reply
+                    }
+                }
+            }
+        }
+        return directives
+    }    
+
     getTextTemplate(text) {
         let bodyTemplate = new BaseBot.Directive.Display.Template.BodyTemplate1();
         bodyTemplate.setTitle(this.title);
