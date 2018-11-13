@@ -100,11 +100,11 @@ class Bot extends BaseBot {
             //设置Play指令的PlayerInfo
             a1.setPlayerInfo(playerInfo);
 
-            playerInfo.setTitleSubtext1('过度');
-            a2.setPlayerInfo(playerInfo);
+            // playerInfo.setTitleSubtext1('过度');
+            // a2.setPlayerInfo(playerInfo);
     
             const response = {
-                directives: [a1, a2]
+                directives: [a1]
                 // outputSpeech: '这是你要听的词语'
             }
             console.log(JSON.stringify(response))
