@@ -36,6 +36,7 @@ class Bot extends BaseBot {
         const bot_id = request.getBotId()
         this.agent = AGENT_MAP[bot_id]
         console.log(`request from bot ${bot_id} of user ${user_id}`)
+        console.log(JSON.stringify(request))
         if (!this.agent) {
             console.log('bot id does not register agent: ' + bot_id)
             this.agent = 'dictation'
@@ -58,7 +59,8 @@ class Bot extends BaseBot {
             const response = {
                 directives: [this.getTextTemplate('欢迎使用测试技能')],
                 outputSpeech: '欢迎使用测试技能'
-            }            
+            }         
+            console.log(JSON.stringify(response))
             return response
         });
 
@@ -72,12 +74,13 @@ class Bot extends BaseBot {
             //             })
             const Play = BaseBot.Directive.AudioPlayer.Play
             let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ALL)
-            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
+            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.REPLACE_ENQUEUED)
     
             const response = {
                 directives: [a1, a2],
                 outputSpeech: '欢迎使用测试技能'
-            }            
+            }
+            console.log(JSON.stringify(response))
             return response
         });
         
@@ -93,7 +96,8 @@ class Bot extends BaseBot {
             const response = {
                 directives: [this.getTextTemplate('欢迎下次使用')],
                 outputSpeech: '再见，下次记得找我'
-            }            
+            }
+            console.log(JSON.stringify(response))
             return response
         })
     }
