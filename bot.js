@@ -47,15 +47,6 @@ class Bot extends BaseBot {
             source          : 'dueros'
         }
 
-        const Play = BaseBot.Directive.AudioPlayer.Play
-        let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ALL)
-        let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.REPLACE_ALL)
-
-        const response = {
-            directives: [a1, a2],
-            outputSpeech: '欢迎使用测试技能'
-        }
-
         this.addLaunchHandler(() => {
             this.waitAnswer()
             var that = this
@@ -64,6 +55,10 @@ class Bot extends BaseBot {
             //               .catch((error) => {
             //                 console.log('Error occurred: ' + error + ', ' + error.stack)
             //             })
+            const response = {
+                directives: [this.getTextTemplate('欢迎使用测试技能')],
+                outputSpeech: '欢迎使用测试技能'
+            }            
             return response
         });
 
@@ -75,6 +70,14 @@ class Bot extends BaseBot {
             //               .catch((error) => {
             //                 console.log('Error occurred: ' + error)
             //             })
+            const Play = BaseBot.Directive.AudioPlayer.Play
+            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ALL)
+            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
+    
+            const response = {
+                directives: [a1, a2],
+                outputSpeech: '欢迎使用测试技能'
+            }            
             return response
         });
         
@@ -87,6 +90,10 @@ class Bot extends BaseBot {
             //               .catch((error) => {
             //                   console.log('Error occurred: ' + error)
             //               })
+            const response = {
+                directives: [this.getTextTemplate('欢迎下次使用')],
+                outputSpeech: '再见，下次记得找我'
+            }            
             return response
         })
     }
