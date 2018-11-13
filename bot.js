@@ -78,7 +78,7 @@ class Bot extends BaseBot {
             const NextButton = BaseBot.Directive.AudioPlayer.Control.NextButton;
             const PreviousButton = BaseBot.Directive.AudioPlayer.Control.PreviousButton;
 
-            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ALL)
+            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.REPLACE_ENQUEUED)
             let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.ENQUEUE)
 
             // //音频播放器的主界
