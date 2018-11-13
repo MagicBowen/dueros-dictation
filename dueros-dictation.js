@@ -30,6 +30,6 @@ app.post('/', (req, res) => {
             res.send(result);
         });
     });
-}).listen(8090);
+}).listen(8092);
 
 console.log('Dueros course server listen on port 8089');
