@@ -75,7 +75,7 @@ class Bot extends BaseBot {
             const Play = BaseBot.Directive.AudioPlayer.Play
             const PlayerInfo = BaseBot.Directive.AudioPlayer.PlayerInfo;
             const PlayPauseButton = BaseBot.Directive.AudioPlayer.Control.PlayPauseButton;
-            const NextButoon = BaseBot.Directive.AudioPlayer.Control.NextButoon;
+            const NextButton = BaseBot.Directive.AudioPlayer.Control.NextButton;
             const PreviousButton = BaseBot.Directive.AudioPlayer.Control.PreviousButton;
 
             let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.ENQUEUE)
@@ -92,7 +92,7 @@ class Bot extends BaseBot {
             playerInfo.setControls(controls);
 
             //也可以使用addControl,增加一个control
-            playerInfo.addControl(new NextButoon());
+            playerInfo.addControl(new NextButton());
 
             playerInfo.setTitle('词语');
             playerInfo.setTitleSubtext1('窗前');
