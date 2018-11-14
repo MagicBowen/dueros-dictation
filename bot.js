@@ -65,6 +65,7 @@ class Bot extends BaseBot {
         });
         
         this.addSessionEndedHandler(() => {
+            console.log(JSON.stringify(request))
             this.setExpectSpeech(false)
             this.endDialog()
             var that = this
@@ -102,7 +103,7 @@ class Bot extends BaseBot {
         if (result.reply) reply += (result.reply + "。")
         for (let data of result.data) {
             if (data.type && data.type === 'play-audio' && data['text']) {
-                reply += ("，" + data['text'] + "，")
+                reply += ("，" + `<silence time="1"></silence>` + data['text'] + "，")
             } else if (data.type && data.type === 'play-audio' && data['mute']) {
                 const time = data['mute'] > 10 ? 10 : data['mute']
                 reply += `<silence time="${time}"></silence>`
