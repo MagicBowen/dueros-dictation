@@ -32,7 +32,7 @@ class Bot extends BaseBot {
         const bot_id = request.getBotId()
         this.agent = AGENT_MAP[bot_id]
         console.log(`request from bot ${bot_id} of user ${user_id}`)
-        console.log(JSON.stringify(request))
+        // console.log(JSON.stringify(request))
         if (!this.agent) {
             console.log('bot id does not register agent: ' + bot_id)
             this.agent = 'dictation'
