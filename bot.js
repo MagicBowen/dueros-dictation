@@ -23,6 +23,10 @@ function getCloseAppEvent(agent) {
     return 'quit-skill-' + agent
 }
 
+function getNoResponseEvent(agent) {
+    return 'no-response-' + agent
+}
+
 class Bot extends BaseBot {
     constructor(postData) {
         super(postData)
@@ -69,7 +73,8 @@ class Bot extends BaseBot {
             this.setExpectSpeech(false)
             this.endDialog()
             var that = this
-            return chatbot.replyToEvent(that.agent, user_id, getCloseAppEvent(that.agent), user_context)
+            const event = (request.getData().request.reason === 'EXCEEDED_MAX_REPROMPTS') ? getNoResponseEvent(that.agent) : getCloseAppEvent(that.agent)
+            return chatbot.replyToEvent(that.agent, user_id, event, user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
                           .catch((error) => {
                               console.log('Error occurred: ' + error)
