@@ -98,7 +98,7 @@ class Bot extends BaseBot {
 
     getSsmlReply(result) {
         if (!result.data) return result.reply
-        const reply = ''
+        let reply = ''
         if (result.reply) reply += (result.reply + "。")
         for (let data of result.data) {
             if (data.type && data.type === 'play-audio' && data['text']) {
