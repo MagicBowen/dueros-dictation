@@ -23,10 +23,6 @@ function getCloseAppEvent(agent) {
     return 'quit-skill-' + agent
 }
 
-function getNoResponseEvent(agent) {
-    return 'no-response-' + agent
-}
-
 class Bot extends BaseBot {
     constructor(postData) {
         super(postData)
@@ -51,79 +47,75 @@ class Bot extends BaseBot {
         this.addLaunchHandler(() => {
             this.waitAnswer()
             var that = this
-            // return chatbot.replyToEvent(that.agent, user_id, getOpenAppEvent(that.agent), user_context)
-            //               .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
-            //               .catch((error) => {
-            //                 console.log('Error occurred: ' + error + ', ' + error.stack)
-            //             })
-            const response = {
-                directives: [this.getTextTemplate('欢迎使用测试技能')],
-                outputSpeech: '欢迎使用测试技能'
-            }         
-            console.log(JSON.stringify(response))
-            return response
+            return chatbot.replyToEvent(that.agent, user_id, getOpenAppEvent(that.agent), user_context)
+                          .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
+                          .catch((error) => {
+                            console.log('Error occurred: ' + error + ', ' + error.stack)
+                        })
         });
 
         this.addIntentHandler('ai.dueros.common.default_intent', () => {
             this.waitAnswer()
             var that = this
-            // return chatbot.replyToText(that.agent, user_id, request.getQuery(), user_context)
-            //               .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
-            //               .catch((error) => {
-            //                 console.log('Error occurred: ' + error)
-            //             })
-            const Play = BaseBot.Directive.AudioPlayer.Play
-            const PlayerInfo = BaseBot.Directive.AudioPlayer.PlayerInfo;
-            const PlayPauseButton = BaseBot.Directive.AudioPlayer.Control.PlayPauseButton;
-            const NextButton = BaseBot.Directive.AudioPlayer.Control.NextButton;
-            const PreviousButton = BaseBot.Directive.AudioPlayer.Control.PreviousButton;
-
-            let a1 = new Play('http://xiaoda.ai/audios/audio?name=05', Play.ENQUEUE)
-            let a2 = new Play('https://xiaodamp.cn/asst/tts/f7e4c110-e67b-11e8-9774-bd7f39b40d24.mp3', Play.REPLACE_ENQUEUED)
-
-            const response = {
-                directives: [a1, a2],
-                outputSpeech: '这是你要听的词语'
-            }
-            console.log(JSON.stringify(response))
-            return response
+            return chatbot.replyToText(that.agent, user_id, request.getQuery(), user_context)
+                          .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
+                          .catch((error) => {
+                            console.log('Error occurred: ' + error)
+                        })
         });
         
         this.addSessionEndedHandler(() => {
             this.setExpectSpeech(false)
             this.endDialog()
             var that = this
-            // return chatbot.replyToEvent(that.agent, user_id, getCloseAppEvent(that.agent), user_context)
-            //               .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
-            //               .catch((error) => {
-            //                   console.log('Error occurred: ' + error)
-            //               })
-            const response = {
-                directives: [this.getTextTemplate('欢迎下次使用')],
-                outputSpeech: '再见，下次记得找我'
-            }
-            console.log(JSON.stringify(response))
-            return response
+            return chatbot.replyToEvent(that.agent, user_id, getCloseAppEvent(that.agent), user_context)
+                          .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
+                          .catch((error) => {
+                              console.log('Error occurred: ' + error)
+                          })
         })
     }
 
     isIndicateQuit(result) {
-        if (!result || !result.data) return false
+        if (result.intent.indexOf('close-app') != -1) return true
+        if (!result.data) return false
         return result.data.filter((data) => {return data.type === 'quit-skill'}).length > 0
     }
 
     buildResponse(result) {
         console.log(JSON.stringify(result))
-        if ((result.intent.indexOf('close-app') != -1)||this.isIndicateQuit(result)) {
+        if (this.isIndicateQuit(result)) {
             this.setExpectSpeech(false)
             this.endDialog()
-            return {outputSpeech: result.reply}
+            return {outputSpeech: this.getSsmlReply(result)}
         }
 
         return {
             directives: [this.getTextTemplate(result.reply)],
-            outputSpeech: result.reply
+            outputSpeech: this.getSsmlReply(result)
         }
+    }
+
+    getSsmlReply(result) {
+        if (!result.data) return result.reply
+        const reply = ''
+        if (result.reply) reply += (result.reply + "。")
+        for (let data of result.data) {
+            if (data.type && data.type === 'play-audio' && data['text']) {
+                reply += ("，" + data['text'] + "，")
+            } else if (data.type && data.type === 'play-audio' && data['mute']) {
+                const time = data['mute'] > 10 ? 10 : data['mute']
+                reply += `<silence time="${time}"></silence>`
+            }else if (data.type && data.type === 'text' && data['reply']) {
+                if (result.reply) {
+                    reply += `。${data.reply}`
+                } else {
+                    reply = data.reply
+                }
+            }
+        }
+        console.log('SSML : ' + reply)
+        return `<speak>${reply}</speak>`
     }
 
     getDirectives(result) {
