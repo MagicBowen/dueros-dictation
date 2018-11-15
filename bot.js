@@ -36,7 +36,7 @@ class Bot extends BaseBot {
         const bot_id = request.getBotId()
         this.agent = AGENT_MAP[bot_id]
         console.log(`request from bot ${bot_id} of user ${user_id}`)
-        // console.log(JSON.stringify(request))
+        console.log(JSON.stringify(request))
         if (!this.agent) {
             console.log('bot id does not register agent: ' + bot_id)
             this.agent = 'dictation'
@@ -82,12 +82,23 @@ class Bot extends BaseBot {
         })
 
         this.addEventListener('AudioPlayer.PlaybackFinished', () => {
+            console.log('receive event of playback finished')
             var that = this
             return {
-                directives: [that.getTextTemplate(`写完了，请对我说：“小度小度，下一个"`), new BaseBot.Directive.AudioPlayer.Stop()],
+                directives: [new BaseBot.Directive.AudioPlayer.Stop()],
                 outputSpeech: `<speak><silence time="5s"></silence></speak>`
             }
         });
+
+        this.addDefaultEventListener(() => {
+            console.log('receive event of default handler')
+            var that = this
+            return {
+                directives: [that.getTextTemplate('退出技能后，下次进来还可以继续听写')],
+                outputSpeech: `<speak><silence time="500ms"></silence></speak>`
+            }
+
+        })
     }
 
     isIndicateQuit(result) {
