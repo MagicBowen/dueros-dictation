@@ -49,7 +49,7 @@ class Bot extends BaseBot {
         }
 
         this.addLaunchHandler(() => {
-            this.waitAnswer()
+            // this.waitAnswer()
             var that = this
             return chatbot.replyToEvent(that.agent, user_id, getOpenAppEvent(that.agent), user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
@@ -59,7 +59,7 @@ class Bot extends BaseBot {
         });
 
         this.addIntentHandler('ai.dueros.common.default_intent', () => {
-            this.waitAnswer()
+            // this.waitAnswer()
             var that = this
             return chatbot.replyToText(that.agent, user_id, request.getQuery(), user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
@@ -80,6 +80,14 @@ class Bot extends BaseBot {
                               console.log('Error occurred: ' + error)
                           })
         })
+
+        this.addEventListener('AudioPlayer.PlaybackFinished', () => {
+            var that = this
+            return {
+                directives: [that.getTextTemplate("写完了，请对我说：“小度小度，下一个")],
+                outputSpeech: `<silence time="5s"></silence>`
+            }
+        });
     }
 
     isIndicateQuit(result) {
@@ -106,13 +114,17 @@ class Bot extends BaseBot {
     }
 
     getDirectives(result) {
-        if (!result.data) return [this.getTextTemplate(result.reply)]
+        if (!result.data) {
+            this.waitAnswer()
+            return [this.getTextTemplate(result.reply)]
+        }
         for (let data of result.data) {
             if (data.type && data.type === 'play-audio' && data['text']) {
                 const Play = BaseBot.Directive.AudioPlayer.Play
                 return [new Play(data['audio-url'], Play.REPLACE_ALL)]
             }
         }
+        this.waitAnswer()
         return [this.getTextTemplate(result.reply)]
     }
 
