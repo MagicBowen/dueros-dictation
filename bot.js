@@ -69,7 +69,6 @@ class Bot extends BaseBot {
         });
         
         this.addSessionEndedHandler(() => {
-            // console.log(JSON.stringify(request))
             this.setExpectSpeech(false)
             this.endDialog()
             var that = this
@@ -90,17 +89,33 @@ class Bot extends BaseBot {
     }
 
     buildResponse(result) {
-        console.log(JSON.stringify(result))
+        // console.log(JSON.stringify(result))
         if (this.isIndicateQuit(result)) {
             this.setExpectSpeech(false)
             this.endDialog()
-            return {outputSpeech: this.getSsmlReply(result)}
         }
+        return this.getResponse(result)
+    }
 
+    getResponse(result) {
         return {
-            directives: [this.getTextTemplate(result.reply)],
-            outputSpeech: this.getSsmlReply(result)
+            directives: this.getDirectives(result),
+            outputSpeech: this.getOutputSpeech(result)           
         }
+    }
+
+    getDirectives(result) {
+        for (let data of result.data) {
+            if (data.type && data.type === 'play-audio' && data['text']) {
+                const Play = BaseBot.Directive.AudioPlayer.Play
+                return [new Play(data['audio-url'], Play.REPLACE_ALL)]
+            }
+        }
+        return [this.getTextTemplate(result.reply)]
+    }
+
+    getOutputSpeech(result) {
+        return result.reply
     }
 
     getSsmlReply(result) {
