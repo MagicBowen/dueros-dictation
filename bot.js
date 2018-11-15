@@ -69,7 +69,7 @@ class Bot extends BaseBot {
         });
         
         this.addSessionEndedHandler(() => {
-            console.log(JSON.stringify(request))
+            // console.log(JSON.stringify(request))
             this.setExpectSpeech(false)
             this.endDialog()
             var that = this
@@ -89,6 +89,11 @@ class Bot extends BaseBot {
     }
 
     buildResponse(result) {
+        if(result.reply === '测试一下') {
+            return {
+                outputSpeech: `<speak>银<silence time="500ms"></silence>行</speak>`
+            }
+        }
         console.log(JSON.stringify(result))
         if (this.isIndicateQuit(result)) {
             this.setExpectSpeech(false)
