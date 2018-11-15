@@ -105,6 +105,7 @@ class Bot extends BaseBot {
     }
 
     getDirectives(result) {
+        if (!result.data) return [this.getTextTemplate(result.reply)]
         for (let data of result.data) {
             if (data.type && data.type === 'play-audio' && data['text']) {
                 const Play = BaseBot.Directive.AudioPlayer.Play
