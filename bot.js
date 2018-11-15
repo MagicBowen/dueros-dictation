@@ -93,11 +93,11 @@ class Bot extends BaseBot {
 
         this.addDefaultEventListener(() => {
             console.log('receive event of default handler')
-            var that = this
-            return {
-                directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)],
-                outputSpeech: `<speak><silence time="5s"></silence></speak>`
-            }
+            // var that = this
+            // return {
+            //     directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)],
+            //     outputSpeech: `<speak><silence time="5s"></silence></speak>`
+            // }
 
         })
     }
