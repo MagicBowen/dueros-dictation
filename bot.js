@@ -85,7 +85,8 @@ class Bot extends BaseBot {
             console.log('receive event of playback finished')
             var that = this
             return {
-                directives: [new BaseBot.Directive.AudioPlayer.Stop()],
+                // directives: [new BaseBot.Directive.AudioPlayer.Stop()],
+                directives: [[this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)]],
                 outputSpeech: `<speak><silence time="5s"></silence></speak>`
             }
         });
