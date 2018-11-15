@@ -94,8 +94,7 @@ class Bot extends BaseBot {
             console.log('receive event of default handler')
             var that = this
             return {
-                directives: [that.getTextTemplate('退出技能后，下次进来还可以继续听写')],
-                outputSpeech: `<speak><silence time="500ms"></silence></speak>`
+                directives: [new BaseBot.Directive.AudioPlayer.Stop()]
             }
 
         })
