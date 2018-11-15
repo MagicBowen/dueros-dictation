@@ -60,11 +60,6 @@ class Bot extends BaseBot {
 
         this.addIntentHandler('ai.dueros.common.default_intent', () => {
             this.waitAnswer()
-            if(request.getQuery() === '测试一下') {
-                return {
-                    outputSpeech: `<speak>银<silence time="500ms"></silence>行</speak>`
-                }
-            }
             var that = this
             return chatbot.replyToText(that.agent, user_id, request.getQuery(), user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
@@ -78,7 +73,8 @@ class Bot extends BaseBot {
             this.setExpectSpeech(false)
             this.endDialog()
             var that = this
-            const event = (request.getData().request.reason === 'EXCEEDED_MAX_REPROMPTS') ? getNoResponseEvent(that.agent) : getCloseAppEvent(that.agent)
+            // const event = (request.getData().request.reason === 'EXCEEDED_MAX_REPROMPTS') ? getNoResponseEvent(that.agent) : getCloseAppEvent(that.agent)
+            const event = getCloseAppEvent(that.agent)
             return chatbot.replyToEvent(that.agent, user_id, event, user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
                           .catch((error) => {
