@@ -59,7 +59,7 @@ class Bot extends BaseBot {
         });
 
         this.addIntentHandler('ai.dueros.common.default_intent', () => {
-            this.waitAnswer()
+            // this.waitAnswer()
             var that = this
             return chatbot.replyToText(that.agent, user_id, request.getQuery(), user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
