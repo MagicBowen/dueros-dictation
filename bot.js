@@ -98,9 +98,10 @@ class Bot extends BaseBot {
     }
 
     getResponse(result) {
+        const that = this
         return {
-            directives: this.getDirectives(result),
-            outputSpeech: this.getOutputSpeech(result)           
+            directives: that.getDirectives(result),
+            outputSpeech: that.getOutputSpeech(result)
         }
     }
 
