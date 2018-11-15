@@ -86,7 +86,7 @@ class Bot extends BaseBot {
             var that = this
             return {
                 // directives: [new BaseBot.Directive.AudioPlayer.Stop()],
-                directives: [[this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)]],
+                directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)],
                 outputSpeech: `<speak><silence time="5s"></silence></speak>`
             }
         });
@@ -95,7 +95,8 @@ class Bot extends BaseBot {
             console.log('receive event of default handler')
             var that = this
             return {
-                directives: [new BaseBot.Directive.AudioPlayer.Stop()]
+                directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)],
+                outputSpeech: `<speak><silence time="5s"></silence></speak>`
             }
 
         })
