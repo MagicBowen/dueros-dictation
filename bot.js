@@ -60,7 +60,7 @@ class Bot extends BaseBot {
 
         this.addIntentHandler('ai.dueros.common.default_intent', () => {
             this.waitAnswer()
-            if(result.reply === '测试一下') {
+            if(request.getQuery() === '测试一下') {
                 return {
                     outputSpeech: `<speak>银<silence time="500ms"></silence>行</speak>`
                 }
