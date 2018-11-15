@@ -60,6 +60,11 @@ class Bot extends BaseBot {
 
         this.addIntentHandler('ai.dueros.common.default_intent', () => {
             this.waitAnswer()
+            if(result.reply === '测试一下') {
+                return {
+                    outputSpeech: `<speak>银<silence time="500ms"></silence>行</speak>`
+                }
+            }
             var that = this
             return chatbot.replyToText(that.agent, user_id, request.getQuery(), user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
@@ -89,11 +94,6 @@ class Bot extends BaseBot {
     }
 
     buildResponse(result) {
-        if(result.reply === '测试一下') {
-            return {
-                outputSpeech: `<speak>银<silence time="500ms"></silence>行</speak>`
-            }
-        }
         console.log(JSON.stringify(result))
         if (this.isIndicateQuit(result)) {
             this.setExpectSpeech(false)
