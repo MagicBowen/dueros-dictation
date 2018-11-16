@@ -85,13 +85,18 @@ class Bot extends BaseBot {
         this.addEventListener('AudioPlayer.PlaybackFinished', () => {
             console.log('receive event of playback finished')
             this.waitAnswer()
-            this.setExpectSpeech(false)
-            var that = this
-            return {
-                // directives: [new BaseBot.Directive.AudioPlayer.Stop()],
-                directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)],
-                outputSpeech: `<speak><silence time="10s"></silence></speak>`
-                // outputSpeech: `写好了，对我说：下一个`
+            if (this.isSupportDisplay()) {
+                this.setExpectSpeech(false)
+                return {
+                    directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。重听，可以对我说：“小度小度，再听一遍”`)],
+                    outputSpeech: `<speak><silence time="10s"></silence><silence time="10s"></silence></speak>`
+                }
+            } else {
+                this.setExpectSpeech(true)
+                return {
+                    directives: [new BaseBot.Directive.AudioPlayer.Stop()],
+                    outputSpeech: `写完了，可以对我说：“小度小度，下一个”。重听，可以对我说：“小度小度，再听一遍”`
+                }
             }
         });
 
@@ -99,7 +104,6 @@ class Bot extends BaseBot {
             console.log('receive event of default handler')
             this.setExpectSpeech(false)
             this.waitAnswer()
-            // var that = this
             return {
                 // directives: [new BaseBot.Directive.AudioPlayer.Stop()],
                 // outputSpeech: `<speak><silence time="5s"></silence></speak>`
@@ -118,6 +122,10 @@ class Bot extends BaseBot {
         if (this.isIndicateQuit(result)) {
             this.setExpectSpeech(false)
             this.endDialog()
+            return {
+                directives: [new BaseBot.Directive.AudioPlayer.Stop()],
+                outputSpeech: result.reply
+            }
         }
         return this.getResponse(result)
     }
