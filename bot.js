@@ -89,8 +89,8 @@ class Bot extends BaseBot {
             return {
                 directives: [new BaseBot.Directive.AudioPlayer.Stop()],
                 // directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)],
-                // outputSpeech: `<speak>， <silence time="5s"></silence></speak>`
-                outputSpeech: `写好了，对我说：下一个`
+                outputSpeech: `<speak><silence time="5s"></silence></speak>`
+                // outputSpeech: `写好了，对我说：下一个`
             }
         });
 
@@ -99,10 +99,10 @@ class Bot extends BaseBot {
             this.setExpectSpeech(false)
             this.waitAnswer()
             // var that = this
-            // return {
-            //     directives: [new BaseBot.Directive.AudioPlayer.Stop()],
-            //     outputSpeech: `<speak><silence time="5s"></silence></speak>`
-            // }
+            return {
+                // directives: [new BaseBot.Directive.AudioPlayer.Stop()],
+                outputSpeech: `<speak><silence time="5s"></silence></speak>`
+            }
         })
     }
 
