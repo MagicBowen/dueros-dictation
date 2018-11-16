@@ -35,6 +35,7 @@ class Bot extends BaseBot {
         const user_id = 'dueros_' + request.getUserId()
         const bot_id = request.getBotId()
         this.agent = AGENT_MAP[bot_id]
+        console.log('========================================================')
         console.log(`request from bot ${bot_id} of user ${user_id}`)
         console.log(JSON.stringify(request))
         if (!this.agent) {
@@ -59,6 +60,7 @@ class Bot extends BaseBot {
         });
 
         this.addIntentHandler('ai.dueros.common.default_intent', () => {
+            this.waitAnswer()
             var that = this
             return chatbot.replyToText(that.agent, user_id, request.getQuery(), user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
@@ -82,6 +84,7 @@ class Bot extends BaseBot {
 
         this.addEventListener('AudioPlayer.PlaybackFinished', () => {
             console.log('receive event of playback finished')
+            this.waitAnswer()
             var that = this
             return {
                 directives: [new BaseBot.Directive.AudioPlayer.Stop()],
@@ -92,6 +95,7 @@ class Bot extends BaseBot {
 
         this.addDefaultEventListener(() => {
             console.log('receive event of default handler')
+            this.waitAnswer()
             // var that = this
             // return {
             //     directives: [this.getTextTemplate(`写完了，可以对我说：“小度小度，下一个”。`)],
@@ -113,7 +117,10 @@ class Bot extends BaseBot {
             this.setExpectSpeech(false)
             this.endDialog()
         }
-        return this.getResponse(result)
+        const response = this.getResponse(result)
+        console.log('-------------------------------------')
+        console.log(JSON.stringify(response))
+        return response
     }
 
     getResponse(result) {
@@ -126,7 +133,6 @@ class Bot extends BaseBot {
 
     getDirectives(result) {
         if (!result.data) {
-            this.waitAnswer()
             return [this.getTextTemplate(result.reply)]
         }
         for (let data of result.data) {
@@ -136,7 +142,6 @@ class Bot extends BaseBot {
                 return [new Play(data['audio-url'], Play.REPLACE_ALL)]
             }
         }
-        this.waitAnswer()
         return [this.getTextTemplate(result.reply)]
     }
 
