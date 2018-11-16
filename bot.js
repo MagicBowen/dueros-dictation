@@ -94,17 +94,17 @@ class Bot extends BaseBot {
             }
         });
 
-        this.addDefaultEventListener(() => {
-            console.log('receive event of default handler')
-            // this.setExpectSpeech(false)
-            // this.waitAnswer()
-            // var that = this
-            // return {
-            //     directives: [new BaseBot.Directive.AudioPlayer.Stop()],
-            //     outputSpeech: `<speak><silence time="5s"></silence></speak>`
-            // }
+        // this.addDefaultEventListener(() => {
+        //     console.log('receive event of default handler')
+        //     // this.setExpectSpeech(false)
+        //     // this.waitAnswer()
+        //     // var that = this
+        //     // return {
+        //     //     directives: [new BaseBot.Directive.AudioPlayer.Stop()],
+        //     //     outputSpeech: `<speak><silence time="5s"></silence></speak>`
+        //     // }
 
-        })
+        // })
     }
 
     isIndicateQuit(result) {
