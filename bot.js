@@ -101,7 +101,7 @@ class Bot extends BaseBot {
             // var that = this
             return {
                 // directives: [new BaseBot.Directive.AudioPlayer.Stop()],
-                outputSpeech: `<speak><silence time="5s"></silence></speak>`
+                // outputSpeech: `<speak><silence time="5s"></silence></speak>`
             }
         })
     }
