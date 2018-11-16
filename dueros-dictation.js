@@ -27,6 +27,8 @@ app.post('/', (req, res) => {
         // b.initCertificate(req.headers, req.rawBody).enableVerifyRequestSign();
 
         b.run().then(result => {
+            console.log('-------------------------------------')
+            console.log(JSON.stringify(result))
             res.send(result);
         });
     });

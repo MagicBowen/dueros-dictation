@@ -118,10 +118,7 @@ class Bot extends BaseBot {
             this.setExpectSpeech(false)
             this.endDialog()
         }
-        const response = this.getResponse(result)
-        console.log('-------------------------------------')
-        console.log(JSON.stringify(response))
-        return response
+        return this.getResponse(result)
     }
 
     getResponse(result) {
