@@ -138,7 +138,7 @@ class Bot extends BaseBot {
             if (data.type && data.type === 'play-audio' && data['text']) {
                 const Play = BaseBot.Directive.AudioPlayer.Play
                 this.setExpectSpeech(false)
-                return [new Play(data['audio-url'], Play.REPLACE_ALL)]
+                return [new Play(data['audio-url'].replace('https', 'http'), Play.REPLACE_ALL)]
             }
         }
         return [this.getTextTemplate(result.reply)]
