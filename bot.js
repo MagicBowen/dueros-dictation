@@ -93,7 +93,7 @@ class Bot extends BaseBot {
             } else {
                 this.setExpectSpeech(true)
                 return {
-                    directives: [new BaseBot.Directive.AudioPlayer.Stop()],
+                    // directives: [new BaseBot.Directive.AudioPlayer.Stop()],
                     outputSpeech: `写完了，可以对我说：“小度小度，下一个”。重听，可以对我说：“小度小度，再听一遍”`
                 }
             }
