@@ -36,7 +36,7 @@ class Bot extends BaseBot {
         const bot_id = request.getBotId()
         this.agent = AGENT_MAP[bot_id]
         console.log('========================================================')
-        console.log(`request from bot ${bot_id} of user ${user_id}`)
+        // console.log(`request from bot ${bot_id} of user ${user_id}`)
         console.log(JSON.stringify(request))
         if (!this.agent) {
             console.log('bot id does not register agent: ' + bot_id)
@@ -73,7 +73,6 @@ class Bot extends BaseBot {
             this.setExpectSpeech(false)
             this.endDialog()
             var that = this
-            // const event = (request.getData().request.reason === 'EXCEEDED_MAX_REPROMPTS') ? getNoResponseEvent(that.agent) : getCloseAppEvent(that.agent)
             const event = getCloseAppEvent(that.agent)
             return chatbot.replyToEvent(that.agent, user_id, event, user_context)
                           .then((result) => { return new Promise((resolve) => { resolve(that.buildResponse(result)) }) })
@@ -101,7 +100,7 @@ class Bot extends BaseBot {
         });
 
         this.addDefaultEventListener(() => {
-            console.log('receive event of default handler')
+            // console.log('receive event of default handler')
             this.setExpectSpeech(false)
             this.waitAnswer()
             return {
